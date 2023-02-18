@@ -7,11 +7,16 @@ using Caliburn.Micro.Autofac;
 using EMS.ViewModels;
 using System.ComponentModel;
 using IContainer = Autofac.IContainer;
+using EMS.Views;
+using System.Reflection;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace EMS
 {
     public class Bootstrapper : BootstrapperBase
     {
+        private const string ModuleFilePrefix = "EMS";
         private IContainer _container;
         public Bootstrapper()
         {
@@ -20,13 +25,22 @@ namespace EMS
 
         protected override void Configure()
         {   
+
             base.Configure();
             var builder = new ContainerBuilder();
 
+
+            ConfigureContainer(builder);
+            
             //Event aggregator is for raising events at one place and listening at another
 
             builder.RegisterType<WindowManager>().As<IWindowManager>().SingleInstance();
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+
+            //Registering Modules
+            builder.RegisterModule<EMS.Library.Module>();
+
+            builder.RegisterType<EmployeeDetailsViewModel>().SingleInstance();
 
             //Get every type of class which ends with ViewModel
             builder.RegisterAssemblyTypes(AssemblySource.Instance.ToArray())
@@ -71,6 +85,28 @@ namespace EMS
 
         protected override void BuildUp(object instance) => _container.InjectProperties(instance);
 
+        protected void ConfigureContainer(Autofac.ContainerBuilder builder)
+        {
+            //  good place to register application types or custom modules
+            builder.RegisterType<EmployeeDetailsView>().AsSelf().InstancePerDependency();
+            builder.RegisterType<EmployeeListView>().AsSelf().InstancePerDependency();
+        }
+
+        private static string[] GetAllDllEntries()
+        {
+            var runtimeDir = AppDomain.CurrentDomain.BaseDirectory;
+            var files = Directory.GetFiles(runtimeDir)
+                            .Where(file => Regex.IsMatch(file, @"^.+\.(exe|dll)$")).Where(x =>
+                            {
+                                var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(x);
+                                return fileNameWithoutExtension.StartsWith(ModuleFilePrefix, StringComparison.Ordinal);
+                            }).ToArray();
+            return files;
+        }
+        protected override IEnumerable<Assembly> SelectAssemblies()
+        {
+            return GetAllDllEntries().Select(Assembly.LoadFrom);
+        }
         #region simpleContainerBootstrap
 
         //private SimpleContainer _container = new SimpleContainer();

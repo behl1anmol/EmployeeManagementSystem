@@ -224,7 +224,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\EmployeeService.cs" />
+    <Compile Include="Service\IEmployeeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EMS.EF\EMS.EF.csproj">
@@ -239,6 +243,7 @@
   <ItemGroup>
     <Analyzer Include="..\EMS\packages\Csla.6.2.2\analyzers\c#\Csla.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

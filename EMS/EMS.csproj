@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.Extensions.Configuration.UserSecrets.3.1.20\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props" Condition="Exists('packages\Microsoft.Extensions.Configuration.UserSecrets.3.1.20\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -61,6 +62,12 @@
     </Reference>
     <Reference Include="CslaContrib.CustomFieldData, Version=4.6.606.0, Culture=neutral, PublicKeyToken=eafe756dec3874e6, processorArchitecture=MSIL">
       <HintPath>packages\CslaContrib-CustomFieldData.4.6.606\lib\net461\CslaContrib.CustomFieldData.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -238,14 +245,30 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeListViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
+    <Compile Include="Views\EmployeeListView.xaml.cs">
+      <DependentUpon>EmployeeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmployeeDetailsView.xaml.cs">
+      <DependentUpon>EmployeeDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\EmployeeListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EmployeeDetailsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -295,6 +318,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.Extensions.Configuration.UserSecrets.3.1.20\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Extensions.Configuration.UserSecrets.3.1.20\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props'))" />
     <Error Condition="!Exists('packages\Microsoft.Extensions.Configuration.UserSecrets.3.1.20\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Extensions.Configuration.UserSecrets.3.1.20\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="packages\Microsoft.Extensions.Configuration.UserSecrets.3.1.20\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets" Condition="Exists('packages\Microsoft.Extensions.Configuration.UserSecrets.3.1.20\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

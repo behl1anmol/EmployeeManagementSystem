@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="EMS.Views.EmployeeListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:EMS.Views"
+             xmlns:cal="http://caliburnmicro.com"
+             mc:Ignorable="d" Background="Aquamarine"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <ComboBox Grid.Row="1" Grid.Column="0" x:Name="Employees"
+                  SelectedItem="{Binding Path=SelectedEmployee, Mode=OneWayToSource}"
+                  DisplayMemberPath="empName" Text="Select an Employee"
+                  HorizontalAlignment="Stretch" MinWidth="100"
+                  cal:Message.Attach="[Event SelectionChanged] = [Action EmployeesSelectionChanged($source, $eventArgs)]" />
+            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="SelectedEmployee_empName"  HorizontalAlignment="Center" Margin="5"/>
+        </StackPanel>
+        <ContentControl Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" x:Name="EmployeeDetails"/>
+    </Grid>
+    
+</UserControl>

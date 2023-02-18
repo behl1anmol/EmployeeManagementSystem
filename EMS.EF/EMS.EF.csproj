@@ -250,7 +250,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployeeModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="IRepository.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
